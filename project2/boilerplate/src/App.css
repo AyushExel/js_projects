@@ -1,0 +1,76 @@
+/* App */
+.column {
+  float: left;
+  width: 33.33%;
+}
+.row {
+  padding: 2rem;
+}
+img {
+  width: 20rem;
+  height: 25rem;
+}
+
+/* Responsive layout - makes the three columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 1000px) {
+  .column {
+    width: 100%;
+  }
+}
+
+/* Loader
+Source - https://www.w3schools.com/howto/howto_css_loader.asp
+*/
+.loader {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 120px;
+  height: 120px;
+  margin: -76px 0 0 -76px;
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.slider {
+  width: 50%;
+  padding: 1rem;
+  background: #d3d3d3;
+}
+
+.slide_container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.slider:hover {
+  opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  background: #04aa6d;
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  background: #04aa6d;
+  cursor: pointer;
+}
