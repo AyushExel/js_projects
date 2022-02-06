@@ -1,0 +1,668 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>REST/ Fetch</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+}
+
+.simple-table-header {
+	background: rgb(247, 246, 243);
+	color: black;
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="730c1cf8-9f6b-4664-bac4-ee0dd2adf923" class="page sans"><header><h1 class="page-title">REST/ Fetch</h1></header><div class="page-body"><p id="7295ae39-35ed-4662-9c4e-ce02bf42d378" class="">In very brief, let us quickly understand the role of server or backend in our applications.</p><p id="ec957e12-972e-4612-84aa-8ccf75968836" class="">You can think of the server as a wrapper around the actual database of the application. The database contains all the useful information needed for the application. In a broader sense, this structured information and its state is referred to as <strong>resources. </strong></p><p id="c373421d-0f22-4c5d-818c-2244a02867f7" class="">
+</p><p id="a79afcfd-fa6a-49b3-8461-6cec4c16c08e" class=""><strong>Resources and Representations</strong></p><p id="e2b4ee26-3ea7-4e80-a4cf-bdadf8415690" class="">A resource can be a web page, a video stream, or an image, for example. A resource can even be an abstract concept, such as the list of all users in a database or the weather forecast for a particular location. The only real constraint is that <strong>every resource in a system is uniquely identifiable</strong>. <strong>the server is responsible for managing the state of the resource, but a client can choose which representation they prefer to interact with</strong>.</p><p id="2453edfd-7577-4785-a5a9-bf79d40138ae" class=""><strong>What Is REST?</strong></p><p id="5d3a2877-a7a0-4bbb-8cc5-b43fabb09b9a" class=""><strong>REST stands for </strong><em><strong>Representational State Transfer</strong></em>. <strong>Restful Web Services</strong> is a lightweight, maintainable, and scalable service that is built on the REST architecture. Restful Web Service, expose API from your application in a secure, uniform, stateless manner to the calling client. The calling client can perform predefined operations using the Restful service. The underlying protocol for REST is HTTP.</p><p id="c5536b7c-1f76-4a6f-b2be-0e562ed84ec3" class="">
+</p><h3 id="c53fd1f6-9df1-4d51-aab2-2b4cf0d25c0d" class=""><strong>Attributes that define RESTful systems</strong></h3><p id="b991c820-9019-4f5e-9875-61dc5e9e9a07" class=""><strong>Uniform Interface</strong></p><p id="93af5448-3ca4-45c7-8606-707f15975370" class="">The uniform interface is one of the distinctive attributes of RESTful systems. <strong>It requires clients to access all resources using the same set of standard operations</strong>.</p><p id="3bc04811-fef3-46ab-83e4-c172807f6def" class=""><strong>Stateless</strong></p><p id="5901eec9-c2c7-4651-880b-923dd1573da1" class=""><strong>All operations in a RESTful system should be stateless</strong>. This means each call from the client to the server must not rely on any shared state. It also implies that every request to the server must include all required data for the server to fulfill the request.</p><p id="7fc7f5ae-18f1-43ca-a612-12649181ea13" class="">
+</p><h3 id="c1ea5809-3b0d-4489-823f-cc7364cc2a19" class=""><strong>Restful Methods</strong></h3><p id="6720b4ea-dc3e-4e26-990e-c4ebd73be3aa" class="">Let’s assume that we have a RESTful web service is defined at the location. <strong>http://myapp.com/employee</strong> . When the client makes any request to this web service, it can specify any of the normal HTTP verbs of GET, POST, DELETE and PUT. Below is what would happen If the respective verbs were sent by the client.</p><ol type="1" id="1f52782f-4326-4027-b1ff-5cc4176267ac" class="numbered-list" start="1"><li><strong>POST</strong> – This would be used to create a new employee using the RESTful web service</li></ol><ol type="1" id="b656b0d4-9983-409b-9bed-c483fba19a21" class="numbered-list" start="2"><li><strong>GET</strong> – This would be used to get a list of all employees using the RESTful web service</li></ol><ol type="1" id="6d5c3e76-8740-4500-ab91-53c57f62ee94" class="numbered-list" start="3"><li><strong>PUT</strong> – This would be used to update all employees using the RESTful web service</li></ol><ol type="1" id="e8e5c74d-74f5-47d7-a74d-707e871f514e" class="numbered-list" start="4"><li><strong>DELETE</strong> – This would be used to delete all employees using the RESTful services</li></ol><p id="596dd143-fe4c-44bf-a4d1-e6421b0c5574" class="">Let’s take a look from a perspective of just a single record. Let’s say there was an employee record with the employee number of 1.</p><figure id="9798bbd7-91b0-42f6-ae06-334477b22eeb" class="image"><a href="REST%20Fetch%20730c1cf89f6b4664bac4ee0dd2adf923/032316_0816_RESTfulWebS1.png"><img style="width:647px" src="REST%20Fetch%20730c1cf89f6b4664bac4ee0dd2adf923/032316_0816_RESTfulWebS1.png"/></a></figure><p id="55db44a9-ef31-431c-97c3-2f9c7d4ccbbd" class="">
+</p><p id="1c0a1e96-8672-49d0-ac66-aa791931c275" class="">The following actions would have their respective meanings.</p><ol type="1" id="70569dd4-4a6e-438b-944f-1edbfcf55bc3" class="numbered-list" start="1"><li><strong>POST</strong> – <strong>This would not be applicable since we are fetching data of employee 1 which is already created</strong>.</li></ol><ol type="1" id="a840df7d-8050-433d-8b15-7500736586fa" class="numbered-list" start="2"><li><strong>GET</strong> – This would be used to get the details of the employee with Employee no as 1 using the RESTful web service</li></ol><ol type="1" id="1e836e79-0430-4e23-9271-c23a52c9d5a8" class="numbered-list" start="3"><li><strong>PUT</strong> – This would be used to update the details of the employee with Employee no as 1 using the RESTful web service</li></ol><ol type="1" id="6200605f-ae5e-48b9-bc5a-495c4561a0bb" class="numbered-list" start="4"><li><strong>DELETE</strong> – This is used to delete the details of the employee with Employee no as 1</li></ol><p id="c2d6ce6c-731b-4ba8-ab51-864e19afe3b3" class="">These actions are assigned to a specific link like  <strong>http://myapp.com/employee/ </strong> are also called endpoints of a server</p><p id="02686f65-2a5b-4a29-8407-ba53f670f088" class=""><strong>NOTE:</strong></p><p id="20b91900-d0af-40c6-8968-a7213b32744f" class="">This is a lot of new info if you haven’t worked with backend programming. Also, in-depth knowledge of this isn’t needed for this javascript course. But in the frontend, we’ll use some public REST APIs to fetch some data, which is why it is important that you have a basic idea of the terminologies.</p><p id="4ba7f971-a347-4494-902c-dd190b039f74" class=""><strong>Optionally</strong>, you can read these tutorials on REST which have been distilled in this section:</p><ul id="b38de508-92ed-4682-a186-ec58af391dde" class="bulleted-list"><li style="list-style-type:disc"><a href="https://www.guru99.com/restful-web-services.html">RESTful web services</a></li></ul><ul id="55b4583b-a220-4507-bb6d-9913afe51e28" class="bulleted-list"><li style="list-style-type:disc"><a href="https://www.baeldung.com/cs/rest-vs-http">Comparing HTTP and REST</a></li></ul><p id="600862f2-ef9a-4a82-a5d2-e7c9bdf0df4c" class="">
+</p><h1 id="7d71a0bd-2048-4da0-a42b-811b6a0b5505" class="">Fetch</h1><p id="f546e266-29a7-40b1-8fc2-f2247a0fbe70" class="">All of the previous section was merely an intro to REST APIs. The section wasn’t intended to help you design the APIs but to consume them.</p><p id="5aba1e26-bea3-4496-af43-052c03372df6" class="">the <code>fetch</code> function is the most common way to consume resources asynchronously. It uses <strong>promises</strong>.</p><p id="8d474b0f-6f41-413a-9c09-6175a312f664" class=""><strong>Reading Material:</strong></p><ul id="1b3f4969-f88a-4c0c-b8ab-240627ace05d" class="bulleted-list"><li style="list-style-type:disc"><a href="https://www.freecodecamp.org/news/javascript-fetch-api-tutorial-with-js-fetch-post-and-header-examples/">Working with fetch</a></li></ul><p id="b39d29ba-d120-45dc-ad54-81fd597272d8" class="">In the above tutorial, you’ll understand the structure and arguments of the fetch function.</p><p id="a177b95a-788f-4169-afc1-f9cb9ac820e7" class="">Let’s take a look at the executable example from the article.</p><p id="b1bced0b-c450-4a46-9f1b-75426e73e8bc" class=""><strong>Example - Using GitHub public API</strong></p><ul id="190908a9-aacc-4730-bd8c-eceada520c3c" class="bulleted-list"><li style="list-style-type:disc">Execute the following code in your browser. Put this script in a separate file or in the html boiler plate itself.</li></ul><pre id="6f724fda-6832-4780-a2de-db4eb1f60df1" class="code"><code>// GET Request.
+fetch(&quot;https://api.github.com/users/manishmshiva&quot;)
+  // Handle success
+  .then((response) =&gt; response.json()) // convert to json
+  .then((json) =&gt; console.log(json)) //print data to console
+  .catch((err) =&gt; console.log(&quot;Request Failed&quot;, err)); // Catch errors</code></pre><ul id="7c47e1c6-2314-4dba-a9a4-c8c455b485bc" class="bulleted-list"><li style="list-style-type:disc">Open the console from dev options and you should see a response json object.</li></ul><ul id="3288578b-5599-4be1-9f32-6c63d292f46a" class="bulleted-list"><li style="list-style-type:disc">Now, replace the last part of the link with your username. In the response, you’ll be able to see the link to your public avatar</li></ul><p id="c580e273-9b69-4c7d-ac76-04d71b41b2ec" class="">
+</p><p id="4c3c65bb-79d4-48c8-9651-9d74f009fd0c" class="">There are many useful public APIs available. Some require many levels of authentication. For example, check out twitter public api</p></div></article></body></html>
